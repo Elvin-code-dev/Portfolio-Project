@@ -1,0 +1,277 @@
+/* same colors as before, just variables so nothing really changes */
+:root{
+  --bg: #0b0f14;
+  --panel: #11161d;
+  --border: #223042;
+  --text: #e8f2ff;
+  --muted: #a9b8ca;
+  --accent: #18c2a6;
+  --accent-ink: #00130f;
+}
+
+/* some css why not had some extra time on my hands-page setup */
+* { box-sizing: border-box; }
+
+body{
+  margin:0;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+/* THE Ultimate header */
+header{
+  position: sticky;
+  top: 0;
+  background-color: var(--panel);
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+
+/* the navagtion bar  */
+.bar{
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px 16px ;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* left side my logo + name */
+.left{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-weight: bold ;
+  text-decoration: none;
+}
+.left img{
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+}
+
+/* the nav links */
+nav a{
+  color: var(--muted);
+  text-decoration: none;
+  padding: 6px 10px ;
+  border-radius: 8px;
+}
+nav a:hover{
+  color: var(--text);
+  background-color: var(--border);
+}
+/* tiny focus ring for accessibility */
+a:focus-visible{
+  outline: 3px solid var(--accent);
+  outline-offset: 2px ;
+  border-radius: 6px;
+}
+
+/* main */
+.wrap{
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px 60px ;
+}
+section{ margin-top: 30px; scroll-margin-top: 80px; }
+
+/* card is the the box style */
+.card{
+  background-color: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px ;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* the hero which is the the intro layout */
+.hero{
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 16px ;
+  align-items: center;
+}
+.hero img{
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  object-fit: cover ;
+}
+
+/* headings and tag  */
+h1{ margin: 0; font-size: 1.8rem; }
+h2{ margin: 0 0 10px; font-size: 1.3rem; }
+.tag{ color: var(--muted); margin-top: 6px; }
+
+/* buttons and links */
+.links{
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.btn{
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  display: inline-block;
+}
+.btn.primary{
+  background-color: var(--accent);
+  color: var(--accent-ink) ;
+}
+.btn.outline{
+  color: var(--text);
+  border: 1px solid var(--border) ;
+}
+.btn.outline:hover{
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* lists */
+ul.clean{ margin: 0; padding-left: 18px; }
+ul.clean li{ margin: 6px 0; color: var(--muted); }
+
+/* pdf preview */
+.pdf-frame{
+  width: 100%;
+  height: 700px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background-color: #0e141b ;
+}
+.pdf-note{
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+/* icons at bottom of contact */
+.social-icons{
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  align-items: center;
+}
+.social-icons img{
+  width: 30px;
+  height: 30px;
+  filter: brightness(0.9);
+  transition: 0.2s ease;
+}
+.social-icons img:hover{
+  filter: brightness(1.3);
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* footer */
+footer {
+  text-align: center;
+  margin-top: 2em;
+  padding: 1em 0;
+  color: #ccc;
+  border-top: 1px solid #333;
+}
+
+footer a {
+  color: #2de1b8; 
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* ---- guestbook form layout (merged) ---- */
+
+/* grid layout for the form fields */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: var(--muted);
+}
+
+/* when you click in box */
+input,
+textarea,
+select {
+  background-color: #0e141b;
+  color: #e8f2ff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 1rem;
+}
+
+/* style for boxes */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--accent);
+  box-shadow: 0 0 5px rgba(24,194,166,0.4);
+}
+
+/* spans for the larger fields */
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
+
+/* mailing list + the radio options */
+.options {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #e8f2ff;
+}
+
+button.submit {
+  background-color: var(--accent);
+  color: var(--accent-ink);
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+button.submit:hover { filter: brightness(1.1); }
+
+/* inline error color */
+.error {
+  display: none;
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  margin-top: 0.35rem;
+}
+
+/* mobile friendly */
+@media (max-width: 600px){
+  .hero{
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero img{ margin: 0 auto; }
+  .pdf-frame{ height: 500px; }
+  .grid { grid-template-columns: 1fr; }
+  .wrap { padding: 20px 12px 48px; }
+}
