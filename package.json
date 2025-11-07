@@ -12,7 +12,12 @@
     "type": "git",
     "url": "git+https://github.com/Elvin-code-dev/Portfolio-Project.git"
   },
-  "keywords": ["express", "guestbook", "portfolio", "nodejs"],
+  "keywords": [
+    "express",
+    "guestbook",
+    "portfolio",
+    "nodejs"
+  ],
   "author": "Elvin Hrytsyuk",
   "license": "ISC",
   "bugs": {
@@ -20,6 +25,7 @@
   },
   "homepage": "https://github.com/Elvin-code-dev/Portfolio-Project#readme",
   "dependencies": {
+    "ejs": "^3.1.10",
     "express": "^5.1.0"
   },
   "devDependencies": {

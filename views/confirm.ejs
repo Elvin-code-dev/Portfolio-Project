@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Submission Confirmed</title>
+  <link rel="icon" type="image/png" href="/assets/Logo.png" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main class="wrap">
+    <section class="card" style="max-width:700px;margin:60px auto;text-align:center;">
+      <h1>Thank You!</h1>
+      <p>Your message was received successfully.</p>
+
+      <% if (typeof contact !== 'undefined') { %>
+        <div class="card" style="text-align:left;margin-top:25px;">
+          <p><strong>Name:</strong> <%= contact.firstName %> <%= contact.lastName %></p>
+          <p><strong>Email:</strong> <%= contact.email %></p>
+          <p><strong>Company:</strong> <%= contact.company || '-' %></p>
+          <p><strong>Job Title:</strong> <%= contact.jobTitle || '-' %></p>
+          <p><strong>LinkedIn:</strong> <%= contact.linkedin || '-' %></p>
+          <p><strong>How We Met:</strong> <%= contact.meet || '-' %> <%= contact.other ? '(' + contact.other + ')' : '' %></p>
+          <p><strong>Mailing List:</strong> <%= contact.mailingList ? 'Yes (' + (contact.format || 'html') + ')' : 'No' %></p>
+          <p><strong>Message:</strong> <%= contact.message || '-' %></p>
+          <p><strong>Submitted:</strong> <%= contact.createdAt ? new Date(contact.createdAt).toLocaleString() : '' %></p>
+        </div>
+      <% } %>
+
+      <p style="margin-top:20px;">
+        <a class="btn primary" href="/">Back to Home</a> ·
+        <a class="btn outline" href="/admin">View All Submissions</a>
+      </p>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

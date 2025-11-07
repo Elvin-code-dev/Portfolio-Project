@@ -1,81 +1,61 @@
-// Import the express module
-import express from 'express';
+// Express + EJS with in-memory submissions (multiple entries)
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 
-// Create an instance of an Express application
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 
-// Enable static file serving
-app.use(express.static('public'));
-
-// Allow the app to parse form data (req.body)
+// static + body parsing
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Store submissions in memory
-const entries = [];
+// ejs
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
-// Define the port number where our server will listen
-const PORT = 3010;
+// in-memory 
+const submissions = []; 
 
-// Home page
-app.get('/', (req, res) => {
-  res.sendFile(`${import.meta.dirname}/views/index.html`);
+// routes
+app.get("/", (req, res) => {
+  res.render("index");
 });
 
-// Confirmation page
-app.get('/confirm', (req, res) => {
-  res.sendFile(`${import.meta.dirname}/views/confirm.html`);
+// admin must pass contacts to EJS
+app.get("/admin", (req, res) => {
+  res.render("admin", { contacts: submissions });
 });
 
-// Admin page (HTML table)
-app.get('/admin', (req, res) => {
-  res.sendFile(`${import.meta.dirname}/views/admin.html`);
-});
-
-
-// NOTE: This route is just a simple way to display all the saved form entries
-// It sends back our in memory array (entries) as JSON so it can be shown on the admin page i wanted to try a diffrent way of doing it 
-// this is not a full API just a simple data dump
-// Admin JSON API
-app.get('/api/submissions', (req, res) => {
-  res.json(entries);
-});
-
-// Contact form submit full contact form
-app.post('/contact', (req, res) => {
+// form submit -> save + confirm 
+app.post("/contact", (req, res) => {
+  const b = req.body || {};
   const entry = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    jobTitle: req.body.jobTitle,
-    company: req.body.company,
-    email: req.body.email,
-    mailingList: req.body.mailingList === 'yes',
-    format: req.body.format || 'html',
-    linkedin: req.body.linkedin,
-    meet: req.body.meet,
-    other: req.body.other,
-    message: req.body.message,
-    createdAt: new Date().toISOString(),
-    source: 'contact'
+    firstName: b.firstName?.trim() || "",
+    lastName:  b.lastName?.trim()  || "",
+    jobTitle:  b.jobTitle?.trim()  || "",
+    company:   b.company?.trim()   || "",
+    email:     b.email?.trim()     || "",
+    mailingList: !!(b.mailingList === "yes" || b.mailingList === "on" || b.mailingList === true),
+    format:    (b.format === "text" ? "text" : "html"),
+    linkedin:  b.linkedin?.trim()  || "",
+    meet:      b.meet?.trim()      || "",
+    other:     b.other?.trim()     || "",
+    message:   b.message?.trim()   || "",
+    createdAt: Date.now()
   };
-  entries.push(entry);
-  res.redirect('/confirm');
+  submissions.push(entry);
+  res.render("confirm", { contact: entry });
 });
 
-// Simple guestbook submit (optional 3-field form)
-app.post('/sign-guestbook', (req, res) => {
-  const entry = {
-    name: req.body.name,
-    email: req.body.email,
-    message: req.body.message,
-    createdAt: new Date().toISOString(),
-    source: 'sign-guestbook'
-  };
-  entries.push(entry);
-  res.redirect('/confirm');
+// JSON
+app.get("/api/submissions", (_req, res) => {
+  res.json(submissions);
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
-});
+// start
+const PORT = process.env.PORT || 3010;
+app.listen(PORT, () => console.log(`http://localhost:${PORT}`));

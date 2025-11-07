@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin — Contact Submissions</title>
+  <link rel="icon" type="image/png" href="/assets/Logo.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    main {
+    max-width: 1200px;
+    margin: 60px auto;
+    color: #eee;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1e1e1e;
+    border: 1px solid #333;
+  }
+
+  th,
+  td {
+    padding: 8px 10px;
+    border: 1px solid #333;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background: #111;
+    color: #2de1b8;
+  }
+
+  tr:nth-child(even) {
+    background: #2a2a2a;
+  }
+
+  tr:hover {
+    background: #333;
+  }
+
+  a.btn {
+    display: inline-block;
+    margin-top: 20px;
+    background: #2de1b8;
+    color: #111;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.2s;
+  }
+
+  a.btn:hover {
+    background: #1ab095;
+  }
+
+  footer {
+    text-align: center;
+    color: #aaa;
+    margin-top: 40px;
+  }
+
+  footer a {
+    color: #2de1b8;
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  </style>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main>
+    <h1>Admin — Contact Submissions</h1>
+    <p class="tag">Below is a list of all submissions stored in memory.</p>
+
+    <% const list = (typeof contacts !== 'undefined' && Array.isArray(contacts)) ? contacts : []; %>
+
+    <% if (list.length === 0) { %>
+      <div class="card"><p>No submissions yet.</p></div>
+    <% } else { %>
+      <div class="card" style="overflow:auto;margin-top:20px;">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First</th>
+              <th>Last</th>
+              <th>Email</th>
+              <th>Job Title</th>
+              <th>Company</th>
+              <th>Mailing List</th>
+              <th>LinkedIn</th>
+              <th>Met</th>
+              <th>Message</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% list.forEach(function(c, i){
+                 const dateStr =
+                   (c && c.createdAt) ? new Date(c.createdAt).toLocaleString()
+                   : (c && c.timestamp) ? c.timestamp
+                   : '';
+            %>
+              <tr>
+                <td><%= i + 1 %></td>
+                <td><%= (c && c.firstName) || '' %></td>
+                <td><%= (c && c.lastName) || '' %></td>
+                <td><%= (c && c.email) || '' %></td>
+                <td><%= (c && c.jobTitle) || '' %></td>
+                <td><%= (c && c.company) || '' %></td>
+                <td><%= (c && c.mailingList) ? ('Yes (' + ((c.format)||'html') + ')') : 'No' %></td>
+                <td><%= (c && c.linkedin) || '' %></td>
+                <td><%= ((c && c.meet) || '') + ((c && c.other) ? (' (' + c.other + ')') : '') %></td>
+                <td><%= (c && c.message) || '' %></td>
+                <td><%= dateStr %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+
+    <p style="margin-top:20px;text-align:center;">
+      <a class="btn" href="/">← Back to Home</a>
+    </p>
+
+    <footer>
+      <p>© <span id="y"></span> Elvin Hrytsyuk — hosted on DigitalOcean</p>
+      <p>
+        GitHub repo:
+        <a href="https://github.com/Elvin-code-dev/Portfolio-Project" target="_blank">
+          https://github.com/Elvin-code-dev/Portfolio-Project
+        </a>
+      </p>
+    </footer>
+  </main>
+
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  <%- include('partials/footer') %>
+</body>
+</html>
